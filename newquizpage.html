@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/homepage.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="display: flex; width: 75%; background: #602EAB; color: #fff; height: 4.5em; font-size: 2.8vw; margin: 4vw 0 4vw 0; font-family: Arial, Helvetica, sans-serif; justify-content: center; align-items: center; border-radius: 0 10vw 10vw 0;"><svg style="height: 50%;" fill="#fff" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="m1647.608 931.313-2.665 707.614-236.558 236.68h-.121l-352.475-352.476 591.819-591.818ZM792.79 1438.707l85.635 85.757-264.295 264.174-85.636-85.635 264.296-264.296Zm-176.165-176.044 85.636 85.636-352.354 352.233-85.636-85.636 352.354-352.233Zm-176.092-176.249 85.514 85.757-440.411 440.29L0 1526.947l440.533-440.533ZM1033.44 317.28 441.744 908.977 89.27 556.745l236.68-236.679 707.492-2.786Zm597.548-41.17 55.96 2.059 2.301 56.08c2.302 54.992-13.323 138.932-100.897 226.384l-42.757 42.878-184.11-184.231 42.756-42.879c86.605-86.483 172.24-102.108 226.747-100.291Zm259.45-202.037c-73.28-27.617-341.21-101.382-615.558 172.967L570.173 951.747l221.417 221.538 221.418 221.417 704.707-704.828c273.016-273.017 199.857-543.005 172.725-615.801" fill-rule="evenodd"></path> </g></svg><h1 style="margin-left: 4vw;">Новая викторина</h1></div>
+    <input id="quizNameInput" class="allInputsStyle" style="margin-bottom: 1.5vw;" placeholder="Название викторины">
+    
+    <form id="questionsForm">
+        <!-- Первый блок вопроса -->
+        <div class="question-block" data-question-index="0">
+            <div style="display: flex;">
+                <h2 class="nqName" style="display: flex;width: 100%; justify-content: space-between; margin-top: 0vw; font-size: 5.5vw;">Новый вопрос</h2>
+                <button style="height: 3em; margin-top: -1.4vw; border: none; padding: 0; background: #fff; aspect-ratio: 1/1;" id="deleteQuestion">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier"> 
+                            <path d="M16 8L8 16M8.00001 8L16 16" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> 
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="newQuestLine">
+                <input id="quizInput" class="allInputsStyle baseInputs qstN" placeholder="Введите вопрос">
+            </div>
+            
+            <div id="newAnswerLine">
+                <input id="quizAnswerInput" class="allInputsStyle baseInputs" placeholder="Введите вариант ответа">
+                <button id="deleteAnswer">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier"> 
+                            <path d="M16 8L8 16M8.00001 8L16 16" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> 
+                        </g>
+                    </svg>
+                </button>
+                <input class="nqRadio" type="radio" name="correctAnswer_0">
+            </div>
+            
+            <button id="setNewAnswer" class="qstBtns">Добавить вариант ответа</button>
+        </div>
+        
+        <!-- Кнопка для добавления нового вопроса -->
+        <button id="setNewQuestion" class="qstBtns" style="margin-top: 3vw; background: #602EAB; color: #fff;">Добавить новый вопрос</button>
+    </form>
+</body>
+<script src="js/newquizpage.js"></script>
+</html>
