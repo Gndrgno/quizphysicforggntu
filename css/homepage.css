@@ -1,0 +1,159 @@
+/* =========================================
+   БАЗОВЫЕ СТИЛИ (Общие для всех страниц)
+   ========================================= */
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #fcfaff;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+/* =========================================
+   СТИЛИ СТРАНИЦЫ НОВОЙ ВИКТОРИНЫ (Неизменны)
+   ========================================= */
+.header-container { margin: 4vw 0; }
+.header-badge {
+    display: flex;
+    width: 75%;
+    background: #602EAB;
+    color: #fff;
+    height: 4.5em;
+    font-size: 2.8vw;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 10vw 10vw 0;
+}
+.header-badge svg { height: 50%; margin-right: 4vw; }
+.content { padding: 0 4vw 10vw 4vw; }
+.allInputsStyle { outline: none; border: 0; border-bottom: 0.1vw solid #602EAB; }
+.main-title-input { height: 10vw; width: 90%; font-size: 5.5vw; margin-bottom: 6vw; background: transparent; }
+.question-block {
+    background: #ffffff;
+    border: 0.2vw solid #602EAB;
+    border-radius: 4vw;
+    padding: 5vw;
+    margin-bottom: 6vw;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.question-block.fade-in { animation: slideIn 0.4s ease-out; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.question-block.removing { opacity: 0; transform: scale(0.9); margin-bottom: 0; padding-top: 0; padding-bottom: 0; height: 0 !important; border-width: 0; }
+.question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4vw; }
+.nqName { font-size: 5.5vw; color: #000; margin: 0; }
+.baseInputs { background-color: #e0d3fe52; border-radius: 2vw; font-size: 4vw; padding: 3vw 4vw; width: 100%; box-sizing: border-box; }
+.qstN { background-color: #fff; border: 1px solid #602EAB; margin-bottom: 5vw; }
+.newAnswerLine { display: flex; align-items: center; gap: 2vw; margin-bottom: 3vw; }
+.delete-btn { background: transparent; width: 8vw; height: 8vw; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.delete-btn svg { width: 100%; height: 100%; }
+.delete-btn svg path { stroke: #FF4B4B; stroke-width: 2.5; }
+.nqRadio { width: 6vw; height: 6vw; accent-color: #602EAB; flex-shrink: 0; }
+.qstBtns { width: 100%; height: 11vw; background: #E0D3FE; border-radius: 2.5vw; color: #602EAB; font-size: 4vw; font-weight: bold; }
+.add-question-main-btn { background: #602EAB; color: #fff; height: 13vw; font-size: 4.5vw; }
+
+/* =========================================
+   СТИЛИ ГЛАВНОЙ СТРАНИЦЫ (Обновлено)
+   ========================================= */
+
+.home-body {
+    background-color: #ffffff !important;
+}
+
+.home-wrapper {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10vw;
+}
+
+/* Эффект появления из "белой тени" (светлой дымки) */
+.hero-section {
+    margin-bottom: 12vw;
+    animation: revealFromWhite 0.6s ease-out forwards;
+}
+
+@keyframes revealFromWhite {
+    0% {
+        opacity: 0;
+        filter: brightness(2) blur(15px); /* Пересветление и размытие */
+        transform: scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        filter: brightness(1) blur(0px);
+        transform: scale(1);
+    }
+}
+
+.main-illustration {
+    width: 85vw;
+    max-width: 480px;
+}
+
+.menu-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5vw;
+}
+
+/* Кнопка с элегантным медленным бликом */
+.home-main-btn {
+    position: relative;
+    overflow: hidden;
+    height: 16vw !important;
+    background: #602EAB !important;
+    color: white !important;
+    border-radius: 4vw !important;
+    font-size: 5vw !important;
+    box-shadow: 0 4px 20px rgba(96, 46, 171, 0.15);
+}
+
+/* Медленный и элегантный блик */
+.home-main-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(
+        to right, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(25deg);
+    animation: elegantShimmer 5s infinite ease-in-out; /* Увеличено до 5 секунд */
+}
+
+@keyframes elegantShimmer {
+    0% { left: -150%; }
+    20% { left: 150%; } /* Блик проходит за первые 20% времени */
+    100% { left: 150%; } /* Остальное время "отдыхает" */
+}
+
+.home-draft-btn {
+    height: 14vw !important;
+    background: #ffffff !important;
+    color: #602EAB !important;
+    border: 0.5vw solid #e0d3fe !important; /* Мягкая граница */
+    border-radius: 4vw !important;
+    font-size: 4.5vw !important;
+}
