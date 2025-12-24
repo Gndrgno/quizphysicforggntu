@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лобби викторины</title>
+    <link rel="stylesheet" href="css/lobby.css">
+</head>
+<body class="quiz-creator-body">
+    <main class="content lobby-container">
+        <div class="lobby-card fade-in">
+            <h2 class="nqName" id="quizTitle">Название викторины</h2>
+            <p class="draft-info" id="quizDesc">Описание викторины появится здесь...</p>
+            <div class="card-buttons">
+                <button class="btn-play" id="startGame">Играть</button>
+                <button class="btn-stop" id="stopGame">Завершить игру</button>
+            </div>
+        </div>
+
+        <div class="lobby-card fade-in" style="animation-delay: 0.1s;">
+            <p class="label-text">Код викторины:</p>
+            <h1 class="quiz-code" id="displayCode">00000000</h1>
+            
+            <div class="qr-container">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://play.myquiz.ru" alt="QR Code" id="qrImage">
+                <p class="scan-hint">Сканируйте</p>
+            </div>
+
+            <div class="link-box">
+                <p class="label-text">Ссылка на викторину:</p>
+                <div class="copy-input-wrapper">
+                    <input type="text" readonly id="quizLink" value="https://play.myquiz.ru/p/00000000">
+                    <button class="copy-btn" onclick="copyLink()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="lobby-card rules-card fade-in" style="animation-delay: 0.2s;">
+            <h3>Как играть:</h3>
+            <ol>
+                <li>Как только игра будет запущена, Вам будет показан вопрос и несколько вариантов ответа.
+                    <ul>
+                        <li>Может быть только один правильный ответ</li>
+                        <li>Как минимум один вариант ответа должен быть неправильный</li>
+                    </ul>
+                </li>
+                <li>После выбора вариантов ответа(ов) необходимо нажать кнопку "Ответить".
+                    <ul>
+                        <li>Первые 3 игрока, ответившие верно, получат бонусные баллы</li>
+                    </ul>
+                </li>
+                <li>В конце игры Вам будет показан Лидерборд.</li>
+            </ol>
+        </div>
+    </main>
+    <script src="js/lobby.js"></script>
+</body>
+</html>
