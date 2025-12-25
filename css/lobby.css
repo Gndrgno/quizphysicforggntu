@@ -1,0 +1,96 @@
+body {
+    background-color: #fcfaff;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 5vw;
+    color: #2d1354;
+}
+
+.lobby-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5vw;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.lobby-card {
+    background: #ffffff;
+    border-radius: 6vw;
+    padding: 6vw;
+    box-shadow: 0 4px 20px rgba(96, 46, 171, 0.08);
+    text-align: center;
+}
+
+.nqName { color: #602EAB; font-size: 6vw; margin-bottom: 2vw; }
+
+.card-buttons { display: flex; flex-direction: column; gap: 3vw; margin-top: 5vw; }
+
+.btn-play, .btn-stop {
+    height: 14vw;
+    border-radius: 7vw;
+    border: none;
+    font-size: 4.5vw;
+    font-weight: 700;
+    color: white;
+    transition: transform 0.2s;
+}
+
+.btn-play { background: #6BCB77; } /* Зеленый как на скрине */
+.btn-stop { background: #FF4B6B; } /* Красный как на скрине */
+
+.btn-play:active, .btn-stop:active { transform: scale(0.95); }
+
+.quiz-code {
+    font-size: 10vw;
+    color: #2d1354;
+    letter-spacing: 1vw;
+    margin: 2vw 0;
+    font-weight: 800;
+}
+
+.qr-container { margin: 5vw 0; }
+.qr-container img { width: 40vw; max-width: 200px; border-radius: 2vw; }
+.scan-hint { opacity: 0.6; font-size: 3.5vw; margin-top: 2vw; }
+
+.copy-input-wrapper {
+    display: flex;
+    background: #f8f6ff;
+    border: 1px solid #e0d3fe;
+    border-radius: 3vw;
+    padding: 2vw;
+    align-items: center;
+    margin-top: 2vw;
+}
+
+.copy-input-wrapper input {
+    border: none;
+    background: none;
+    flex: 1;
+    font-size: 3.5vw;
+    color: #602EAB;
+    outline: none;
+}
+
+.copy-btn {
+    background: none;
+    border: none;
+    color: #602EAB;
+    width: 8vw;
+    height: 8vw;
+}
+
+.rules-card { text-align: left; }
+.rules-card h3 { color: #602EAB; margin-top: 0; }
+.rules-card ol { padding-left: 5vw; font-size: 3.5vw; line-height: 1.6; }
+.rules-card ul { padding-left: 4vw; opacity: 0.8; font-size: 3.2vw; }
+
+.fade-in {
+    animation: slideUp 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
