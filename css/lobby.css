@@ -106,6 +106,7 @@ body {
 .btn-primary {
     background: var(--primary);
     color: white;
+    margin-bottom: 1vw;
 }
 
 .btn-primary:active { transform: scale(0.97); background: var(--primary-hover); }
@@ -263,4 +264,5 @@ button:disabled {
     background: #ccc !important;
     cursor: not-allowed;
     transform: none !important;
+
 }
