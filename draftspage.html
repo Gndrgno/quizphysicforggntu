@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Черновики викторин</title>
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/drafts.css">
+</head>
+<body class="quiz-creator-body">
+    <div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❄</div><div class="snowflake">❅</div><div class="snowflake">❆</div><div class="snowflake">❄</div>
+        <div class="snowflake">❅</div><div class="snowflake">❆</div><div class="snowflake">❄</div><div class="snowflake">❅</div>
+        <div class="snowflake">❆</div><div class="snowflake">❄</div><div class="snowflake">❅</div><div class="snowflake">❆</div>
+        <div class="snowflake">❄</div><div class="snowflake">❅</div><div class="snowflake">❆</div><div class="snowflake">❄</div>
+        <div class="snowflake">❅</div><div class="snowflake">❆</div><div class="snowflake">❄</div><div class="snowflake">❅</div>
+    </div>
+
+    <header class="header-container">
+        <div class="header-badge">
+            <div class="icon-circle">
+                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                </svg>
+            </div>
+            <div class="header-text">
+                <h1>Черновики</h1>
+                <p>Ваши сохраненные проекты</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <div id="draftsWrapper">
+            <p class="draft-info" style="text-align:center; padding-top: 10vw;">Загрузка черновиков...</p>
+        </div>
+
+        <div class="menu-container" style="margin-top: 5vw;">
+            <a href="homepage.html" style="text-decoration: none;">
+                <button type="button" class="home-draft-btn" style="width: 100%;">
+                    <span>Вернуться назад</span>
+                </button>
+            </a>
+        </div>
+    </main>
+
+    <script type="module" src="js/configure.js"></script>
+    <script src="js/drafts.js"></script>
+</body>
+</html>
