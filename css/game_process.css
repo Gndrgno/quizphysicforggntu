@@ -1,0 +1,277 @@
+:root {
+    --primary: #602EAB;
+    --primary-hover: #4e258a;
+    --success: #28a745;
+    --danger: #dc3545;
+    --bg: #F8F9FD;
+    --text: #2D1354;
+    --text-light: #8E7FB0;
+    --white: #FFFFFF;
+    --shadow: 0 10px 25px rgba(96, 46, 171, 0.08);
+    --border: 1px solid rgba(96, 46, 171, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.bg-decoration {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 300px;
+    background: linear-gradient(180deg, rgba(96, 46, 171, 0.05) 0%, transparent 100%);
+    z-index: -1;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 440px;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Карточки */
+.card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: var(--border);
+    text-align: center;
+}
+
+/* Статус */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(107, 203, 119, 0.1);
+    padding: 6px 12px;
+    border-radius: 100px;
+    color: var(--success);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.pulse-dot {
+    width: 8px; height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Тексты */
+.quiz-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 16px 0 8px;
+}
+
+.quiz-desc {
+    color: var(--text-light);
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+
+/* Таймер */
+.timer {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 24px;
+    animation: pulse-timer 1s infinite alternate;
+}
+
+@keyframes pulse-timer {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+/* Кнопки */
+.btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 16px;
+    border: none;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover { background: var(--primary-hover); }
+
+.btn-link-danger {
+    background: transparent;
+    color: var(--danger);
+    box-shadow: none;
+}
+
+/* Варианты ответов (для игроков) */
+.answers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.answer-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.answer-btn.correct {
+    background: linear-gradient(to right, var(--success) 100%, #f8f9fa 100%);
+    background-size: 200% 100%;
+    animation: fill-color 0.5s ease forwards;
+    color: white;
+    border: none;
+}
+
+.answer-btn.incorrect {
+    background: linear-gradient(to right, var(--danger) 100%, #f8f9fa 100%);
+    background-size: 200% 100%;
+    animation: fill-color 0.5s ease forwards;
+    color: white;
+    border: none;
+}
+
+@keyframes fill-color {
+    from { background-position: 100% 0; }
+    to { background-position: 0 0; }
+}
+
+.answer-btn.selected {
+    transform: scale(0.98);
+    box-shadow: 0 4px 12px rgba(138,43,226,0.3);
+}
+
+/* Баллы игрока */
+.score-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F3EEFF;
+    padding: 12px;
+    border-radius: 16px;
+    margin-top: 24px;
+    font-size: 18px;
+}
+
+.score-pill b {
+    margin-right: 8px;
+    color: var(--primary);
+}
+
+/* Список ответов (для админа) */
+.players-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.player-answer-tag {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 14px 16px;
+    background: #f8f9fa;
+    border-radius: 14px;
+    min-height: 60px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.player-answer-tag span:first-child {
+    font-weight: 500;
+    max-width: 40%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-answer-tag .answer-status {
+    color: var(--text-light);
+}
+
+.player-answer-tag .score {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.player-answer-tag .time {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+/* Финальный экран */
+.final-card {
+    text-align: center;
+}
+
+.final-card .players-grid .player-answer-tag {
+    justify-content: space-between;
+}
+
+.final-card .players-grid .player-answer-tag span:first-child {
+    max-width: 60%;
+}
+
+.final-card .players-grid .player-answer-tag .score {
+    font-size: 18px;
+}
+
+/* Анимации */
+.fade-in { animation: slideUp 0.6s ease-out forwards; opacity: 0; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+.role-controls { margin-top: 20px; width: 100%; }
+
+.btn-ready {
+    background: #6BCB77;
+    color: white;
+}
+.btn-ready.active {
+    background: #4e258a;
+    opacity: 0.8;
+}
+
+button:disabled {
+    background: #ccc !important;
+    cursor: not-allowed;
+    transform: none !important;
+}
