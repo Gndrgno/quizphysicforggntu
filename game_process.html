@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Игра в викторину | Quiz Time</title>
+    <link rel="stylesheet" href="css/game_process.css"> <!-- Подключи свой CSS для стилей -->
+</head>
+<body>
+
+    <div class="bg-decoration"></div>
+
+    <main class="game-container">
+        <!-- Блок для админа: управление игрой, список игроков с ответами и баллами -->
+        <section id="adminGameControls" class="card admin-card" style="display: none;">
+            <h1 id="quizTitleAdmin" class="quiz-title">Загрузка...</h1>
+            <p id="questionTextAdmin" class="question-text">Текущий вопрос: Загрузка...</p>
+            <div id="timerAdmin" class="timer">Таймер: 10</div>
+            <div class="players-header">Ответы игроков</div>
+            <div id="playersAnswersList" class="players-grid"></div>
+            <button id="nextQuestionBtn" class="btn btn-primary" disabled>Следующий вопрос</button>
+            <button id="endGameBtn" class="btn btn-link-danger">Завершить игру</button>
+        </section>
+
+        <!-- Блок для игроков: вопрос, варианты ответов, таймер -->
+        <section id="playerGameControls" class="card player-card" style="display: none;">
+            <h1 id="quizTitlePlayer" class="quiz-title">Загрузка...</h1>
+            <p id="questionTextPlayer" class="question-text">Загрузка...</p>
+            <div id="timerPlayer" class="timer">Таймер: 10</div>
+            <div id="answersList" class="answers-grid"></div>
+            <p id="playerScore" class="score-text">Ваш счёт: 0</p>
+        </section>
+    </main>
+
+    <script type="module" src="js/configure.js"></script> <!-- Подключение Firebase конфигурации -->
+    <script src="js/game_process.js"></script> <!-- Твой новый JS для логики игры -->
+</body>
+</html>
