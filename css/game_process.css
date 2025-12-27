@@ -1,0 +1,300 @@
+:root {
+    --primary: #602EAB;
+    --primary-hover: #4e258a;
+    --success: #28a745;
+    --danger: #dc3545;
+    --bg: #F8F9FD;
+    --text: #2D1354;
+    --text-light: #8E7FB0;
+    --white: #FFFFFF;
+    --card-bg: #FFFFFF;
+    --shadow: 0 12px 32px rgba(96, 46, 171, 0.12);
+    --border: 1px solid rgba(96, 46, 171, 0.15);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background: linear-gradient(135deg, #f0f2ff 0%, #e8ecff 100%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 20px 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.bg-decoration {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 400px;
+    background: linear-gradient(180deg, rgba(96, 46, 171, 0.08) 0%, transparent 100%);
+    z-index: -1;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 460px;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Карточки */
+.card {
+    background: var(--card-bg);
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    border: var(--border);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), #a78bfa);
+    border-radius: 28px 28px 0 0;
+}
+
+/* Заголовки */
+.quiz-title {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    color: var(--text);
+}
+
+.question-text {
+    font-size: 19px;
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+    color: var(--text);
+}
+
+/* Прогресс-бар */
+.progress-container {
+    width: 100%;
+    height: 14px;
+    background: #e0e0e0;
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 24px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, var(--primary), #a78bfa);
+    border-radius: 14px;
+    transition: width 0.8s linear;
+}
+
+.progress-container.waiting {
+    background: #f0e8ff;
+}
+
+.progress-container.waiting .progress-bar {
+    background: linear-gradient(90deg, #ccc, #999);
+    animation: waiting-fill 5s linear forwards;
+}
+
+.waiting-text {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 16px;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+@keyframes waiting-fill {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* Кнопки ответов */
+.answers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.answer-btn {
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+}
+
+.answer-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(138,43,226,0.2);
+}
+
+.answer-btn.selected {
+    border-color: var(--primary);
+    background: #f0e8ff;
+    transform: scale(0.98);
+}
+
+.answer-btn.correct {
+    background: linear-gradient(to right, var(--success) 100%, #f8f9fa 100%);
+    background-size: 200% 100%;
+    animation: fill-success 0.8s ease forwards;
+    color: white;
+    border: none;
+}
+
+.answer-btn.incorrect {
+    background: linear-gradient(to right, var(--danger) 100%, #f8f9fa 100%);
+    background-size: 200% 100%;
+    animation: fill-danger 0.8s ease forwards;
+    color: white;
+    border: none;
+}
+
+@keyframes fill-success {
+    from { background-position: 100% 0; }
+    to { background-position: 0 0; }
+}
+
+@keyframes fill-danger {
+    from { background-position: 100% 0; }
+    to { background-position: 0 0; }
+}
+
+/* Баллы за вопрос */
+.score-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #d8b4fe, #c084fc);
+    color: white;
+    padding: 18px;
+    border-radius: 20px;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(138,43,226,0.3);
+}
+
+.score-pill b {
+    font-size: 28px;
+    margin-right: 12px;
+}
+
+/* Ответы игроков у админа */
+.players-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.player-answer-tag {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px;
+    background: #f8f9fa;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-left: 5px solid var(--primary);
+}
+
+.player-answer-tag span:first-child {
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.player-answer-tag .answer-status {
+    font-size: 15px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.player-answer-tag .answer-status:contains('Правильно') {
+    background: rgba(40,167,69,0.15);
+    color: var(--success);
+}
+
+.player-answer-tag .answer-status:contains('Неправильно') {
+    background: rgba(220,53,69,0.15);
+    color: var(--danger);
+}
+
+.player-answer-tag .score {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.player-answer-tag .time {
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+/* Кнопки */
+.btn {
+    width: 100%;
+    padding: 18px;
+    border-radius: 20px;
+    border: none;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ff4757, #ff3838);
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+/* Финальный экран */
+.final-card .quiz-title {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.final-subtitle {
+    text-align: center;
+    font-size: 18px;
+    color: var(--text-light);
+    margin-bottom: 40px;
+}
+
+.final-card .players-grid .player-answer-tag {
+    background: linear-gradient(135deg, #f3eeff, #e8e0ff);
+    border-left: 6px solid var(--primary);
+}
