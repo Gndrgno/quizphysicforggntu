@@ -49,10 +49,10 @@ body {
     padding: 24px;
     box-shadow: var(--shadow);
     border: var(--border);
-    text-align: center;
+    text-align: left; /* Все тексты слева */
 }
 
-/* Статус */
+/* Статус (только для админа) */
 .status-indicator {
     display: inline-flex;
     align-items: center;
@@ -83,12 +83,14 @@ body {
     font-size: 24px;
     font-weight: 800;
     margin: 16px 0 8px;
+    text-align: left;
 }
 
-.quiz-desc {
-    color: var(--text-light);
-    font-size: 15px;
-    margin-bottom: 24px;
+.question-text {
+    color: var(--text);
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: left;
 }
 
 /* Таймер */
@@ -97,6 +99,7 @@ body {
     font-weight: 900;
     color: var(--primary);
     margin-bottom: 24px;
+    text-align: left;
     animation: pulse-timer 1s infinite alternate;
 }
 
@@ -151,6 +154,7 @@ body {
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     position: relative;
     overflow: hidden;
+    text-align: left;
 }
 
 .answer-btn.correct {
@@ -179,16 +183,16 @@ body {
     box-shadow: 0 4px 12px rgba(138,43,226,0.3);
 }
 
-/* Баллы игрока */
+/* Баллы игрока (показывается после таймера) */
 .score-pill {
     display: flex;
     align-items: center;
-    justify-content: center;
     background: #F3EEFF;
     padding: 12px;
     border-radius: 16px;
     margin-top: 24px;
     font-size: 18px;
+    text-align: left;
 }
 
 .score-pill b {
@@ -215,6 +219,7 @@ body {
     min-height: 60px;
     box-sizing: border-box;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    text-align: left;
 }
 
 .player-answer-tag span:first-child {
@@ -240,7 +245,11 @@ body {
 
 /* Финальный экран */
 .final-card {
-    text-align: center;
+    text-align: left;
+}
+
+.final-card .quiz-title {
+    text-align: left;
 }
 
 .final-card .players-grid .player-answer-tag {
