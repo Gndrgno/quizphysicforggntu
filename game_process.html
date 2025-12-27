@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Игра в викторину | Quiz Time</title>
+    <link rel="stylesheet" href="css/game_process.css">
+</head>
+<body>
+
+    <div class="bg-decoration"></div>
+
+    <main class="game-container">
+        <!-- Блок для админа: вопрос, таймер, список ответов игроков, кнопка завершить -->
+        <section id="adminGameControls" class="card admin-card fade-in" style="display: none;">
+            <div class="status-row">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="statusTextAdmin">Игра в процессе</span>
+                </div>
+            </div>
+            <h1 id="quizTitleAdmin" class="quiz-title">Загрузка...</h1>
+            <p id="questionTextAdmin" class="quiz-desc">Текущий вопрос: Загрузка...</p>
+            <div id="timerAdmin" class="timer">10</div>
+            <div class="players-header">Ответы игроков</div>
+            <div id="playersAnswersList" class="players-grid"></div>
+            <button type="button" class="btn btn-link-danger" id="endGameBtn">Завершить игру</button>
+        </section>
+
+        <!-- Блок для игроков: вопрос, таймер, варианты ответов, счёт -->
+        <section id="playerGameControls" class="card player-card fade-in" style="display: none;">
+            <div class="status-row">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="statusTextPlayer">Игра в процессе</span>
+                </div>
+            </div>
+            <h1 id="quizTitlePlayer" class="quiz-title">Загрузка...</h1>
+            <p id="questionTextPlayer" class="quiz-desc">Загрузка...</p>
+            <div id="timerPlayer" class="timer">10</div>
+            <div id="answersList" class="answers-grid"></div>
+            <div class="score-pill">
+                <b id="playerScore">0</b><span>Баллов</span>
+            </div>
+        </section>
+
+        <!-- Финальный экран (для всех) -->
+        <section id="finalResults" class="card final-card fade-in" style="display: none;">
+            <h1 class="quiz-title">Игра завершена!</h1>
+            <div class="players-header">Итоговые баллы</div>
+            <div id="finalScoresList" class="players-grid"></div>
+            <button type="button" class="btn btn-primary" id="backToHomeBtn">Вернуться на главную</button>
+        </section>
+    </main>
+
+    <script type="module" src="js/configure.js"></script>
+    <script src="js/game_process.js"></script>
+</body>
+</html>
