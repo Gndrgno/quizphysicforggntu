@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование Викторины</title>
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/editquiz.css">
+</head>
+<body class="quiz-creator-body">
+    <header class="header-container">
+        <div class="header-badge">
+            <div class="icon-circle">
+                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
+            </div>
+            <div class="header-text">
+                <h1>Редактирование</h1>
+                <p>Изменение существующего проекта</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <div class="input-group">
+            <input id="quizNameInput" class="allInputsStyle main-title-input" placeholder="Введите название...">
+            <span class="input-focus-line"></span>
+        </div>
+        
+        <div id="questionsWrapper"></div>
+
+        <button type="button" id="addQuestionBtn" class="qstBtns add-question-main-btn">
+            <span>+ Добавить вопрос</span>
+        </button>
+        <br>
+        <button type="button" id="saveChangesBtn" class="qstBtns add-question-main-btn" style="background: #602EAB; color: #ffffff;">
+            <span>Сохранить изменения</span>
+        </button>
+        
+        <div style="text-align: center; margin-top: 5vw;">
+            <a href="draftspage.html" style="color: #8a2be2; text-decoration: none; font-family: sans-serif;">Отмена</a>
+        </div>
+    </main>
+
+    <div id="globalLoader" class="loading-overlay active">
+        <div class="spinner"></div>
+    </div>
+
+    <script type="module" src="js/configure.js"></script>
+    <script src="js/editquiz.js"></script>
+</body>
+</html>
