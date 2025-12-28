@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>Игра в викторину | Quiz Time</title>
+    <link rel="stylesheet" href="css/game_process.css" />
+</head>
+<body>
+
+    <main class="game-container">
+
+        <!-- ADMINS CONTROLS -->
+        <section id="adminGameControls" class="card admin-card" style="display:none;">
+            <div class="header-row">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div class="status-indicator"><span class="pulse-dot"></span></div>
+                    <div id="statusTextAdmin" class="muted">Статус: загрузка...</div>
+                </div>
+                <div id="questionCounterAdmin" class="question-counter">Вопрос 0 / 0</div>
+            </div>
+
+            <h1 id="quizTitleAdmin" class="quiz-title">Загрузка...</h1>
+
+            <!-- Контентный блок шириной ~90% -->
+            <div class="content-inner">
+                <p id="questionTextAdmin" class="question-text align-left">...</p>
+
+                <div class="progress-wrapper">
+                    <div class="progress-container main">
+                        <div class="progress-bar" id="progressBarAdmin"></div>
+                        <span class="timer-count" id="timerAdmin">10</span>
+                    </div>
+                    <div class="progress-container waiting" id="waitingBarAdmin" aria-hidden="true" style="display:none">
+                        <div class="progress-bar waiting-bar" id="waitingProgressBarAdmin"></div>
+                        <span class="waiting-count" id="waitingTimerAdmin">5</span>
+                    </div>
+                </div>
+
+                <div class="players-header">Ответы игроков (текущий вопрос)</div>
+                <div id="playersAnswersList" class="players-grid"></div>
+
+                <div class="players-header">Рейтинг (в процессе)</div>
+                <div id="liveRanking" class="players-grid"></div>
+
+                <div class="controls-row">
+                    <button id="forceRevealBtn" class="btn btn-secondary">Показать ответы</button>
+                    <button id="endGameBtn" class="btn btn-danger">Завершить игру</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PLAYER CONTROLS -->
+        <section id="playerGameControls" class="card player-card" style="display:none;">
+            <div class="header-row">
+                <h2 id="quizTitlePlayer" class="quiz-title small">Загрузка...</h2>
+                <div id="questionCounterPlayer" class="question-counter small">Вопрос 0 / 0</div>
+            </div>
+
+            <div class="content-inner">
+                <p id="questionTextPlayer" class="question-text align-left">...</p>
+
+                <div class="progress-wrapper">
+                    <div class="progress-container main">
+                        <div class="progress-bar" id="progressBarPlayer"></div>
+                        <span class="timer-count" id="timerPlayer">10</span>
+                    </div>
+                    <div class="progress-container waiting" id="waitingBarPlayer" style="display:none">
+                        <div class="progress-bar waiting-bar" id="waitingProgressBarPlayer"></div>
+                        <span class="waiting-count" id="waitingTimerPlayer">5</span>
+                    </div>
+                </div>
+
+                <div id="answersList" class="answers-grid" role="list"></div>
+
+                <div id="playerScoreBlock" class="score-pill" style="display:none;">
+                    <b id="playerScore">0</b><span>Баллов за вопрос</span>
+                </div>
+
+                <div class="info-row">
+                    <span id="yourTotalScore">Общий счёт: 0</span>
+                    <span id="yourTotalTime">Общее время: 0 с</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL SCREEN -->
+        <section id="finalResults" class="card final-card" style="display:none;">
+            <h1 class="quiz-title">Игра завершена!</h1>
+            <div class="players-header">Итоговые баллы и время</div>
+            <div id="finalScoresList" class="players-grid"></div>
+            <div style="margin-top:16px;text-align:right">
+                <button type="button" class="btn btn-primary" id="backToHomeBtn">Вернуться на главную</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- configure.js must load before game_process.js -->
+    <script type="module" src="js/configure.js"></script>
+    <script type="module" src="js/game_process.js"></script>
+</body>
+</html>
