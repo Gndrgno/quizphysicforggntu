@@ -1,0 +1,157 @@
+:root{
+    --primary:#602EAB;
+    --accent:#7B3FF2;
+    --success:#34d177;
+    --danger:#ff5d6c;
+    --glass:rgba(255,255,255,0.95);
+    --bg: #fcfaff;
+    --muted:#6f6185;
+    --card-shadow:0 18px 50px rgba(16,8,40,0.06);
+    --radius:20px;
+    --transition:300ms cubic-bezier(.2,.9,.25,1);
+}
+
+*{box-sizing:border-box}
+body{
+    margin:0;
+    min-height:100vh;
+    font-family: 'Segoe UI', Roboto, Inter, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
+    background:var(--bg);
+    color:#23123a;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+/* overall container centered, cards stacked vertically */
+.game-container{
+    width:100%;
+    max-width:1400px;
+    margin:0 auto;
+    padding:28px 24px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+}
+
+/* Card */
+.card{
+    background:var(--glass);
+    backdrop-filter: blur(6px);
+    border-radius:16px;
+    padding:18px;
+    box-shadow:var(--card-shadow);
+}
+
+/* header row */
+.header-row{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:10px}
+.quiz-title{font-size:30px;margin:0;color:var(--primary);font-weight:900}
+.quiz-title.small{font-size:20px}
+.question-counter{background:linear-gradient(90deg,#f5f2ff,#fff);padding:8px 12px;border-radius:12px;color:var(--muted);font-weight:800;font-size:15px}
+
+/* full-bleed content: spans across viewport width (centered) */
+.content-inner.full-bleed{
+    width:100vw;
+    max-width:100vw;
+    margin-left:calc(50% - 50vw);
+    padding:28px;
+    background: linear-gradient(180deg, rgba(123,63,242,0.03), rgba(255,255,255,0));
+    border-radius:12px;
+}
+
+/* question block */
+.question-text{
+    font-size:28px;
+    font-weight:900;
+    margin:6px 0 20px;
+    color:#24173a;
+    line-height:1.18;
+}
+
+/* progress bars */
+.progress-wrapper{margin-bottom:18px}
+.progress-container{
+    width:100%;
+    height:22px;
+    border-radius:14px;
+    background:#f2ecff;
+    overflow:hidden;
+    position:relative;
+    box-shadow:inset 0 -2px 8px rgba(0,0,0,0.02);
+}
+.progress-container.main .progress-bar{
+    height:100%;
+    width:100%;
+    background:linear-gradient(90deg,var(--accent),var(--primary));
+    transition:width 160ms linear;
+    transform-origin:left center;
+}
+.progress-container.waiting{margin-top:12px;background:#f3f3f7}
+.progress-container .waiting-bar{
+    height:100%;
+    width:100%;
+    background:linear-gradient(90deg,#d6d6d9,#bfbccf);
+    transition:width 160ms linear;
+}
+
+/* timer label */
+.timer-count{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:900;color:white;text-shadow:0 3px 8px rgba(0,0,0,0.25);font-size:14px;padding:4px 8px;border-radius:8px;
+}
+.waiting-count{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-weight:900;color:#4b3f6b;font-size:14px;padding:4px 8px;border-radius:8px}
+
+/* answers list - spacious and prominent */
+.answers-grid{display:flex;flex-direction:column;gap:18px}
+.answer-btn{
+    display:flex;align-items:center;gap:18px;padding:20px;border-radius:14px;background:#fff;border:1px solid rgba(96,46,171,0.06);
+    cursor:pointer;font-weight:900;font-size:20px;color:#1f1530;position:relative;overflow:hidden;transition:transform var(--transition), box-shadow var(--transition), border-color var(--transition), background-color var(--transition);
+    text-align:left;
+}
+.answer-btn:hover{transform:translateY(-8px);box-shadow:0 28px 60px rgba(96,46,171,0.06)}
+.answer-btn:active{transform:translateY(-4px)}
+.answer-btn[disabled]{opacity:0.72;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* selected */
+.answer-btn.selected{
+    border:3px solid rgba(96,46,171,0.9);
+    background:linear-gradient(90deg, rgba(123,63,242,0.06), rgba(123,63,242,0.02));
+    box-shadow:0 18px 40px rgba(107,44,224,0.06);
+}
+
+/* reveal overlays */
+.answer-btn::before{
+    content:"";position:absolute;inset:0;transform-origin:left center;transform:scaleX(0);opacity:0;transition:transform 700ms ease, opacity 280ms ease;border-radius:12px;pointer-events:none;
+}
+.answer-btn.correct::before{background:linear-gradient(90deg,rgba(52,209,119,0.95),rgba(34,197,94,0.95));opacity:1;transform:scaleX(1)}
+.answer-btn.incorrect::before{background:linear-gradient(90deg,rgba(255,93,108,0.95),rgba(255,70,90,0.95));opacity:1;transform:scaleX(1)}
+.answer-btn.correct, .answer-btn.incorrect{color:#fff;border-color:transparent}
+
+/* status icon */
+.answer-btn .status-icon{width:38px;height:38px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;opacity:0;transform:translateX(6px);transition:all 420ms ease}
+.answer-btn.correct .status-icon{background:rgba(0,0,0,0.08);opacity:1;transform:translateX(0)}
+.answer-btn.incorrect .status-icon{background:rgba(0,0,0,0.08);opacity:1;transform:translateX(0)}
+
+/* score pill */
+.score-pill{display:flex;gap:12px;align-items:center;padding:16px;border-radius:14px;background:#f3efff;margin-top:18px;font-weight:900;color:var(--primary);font-size:18px}
+
+/* players grid tags */
+.players-grid{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.player-answer-tag{display:flex;justify-content:space-between;align-items:center;padding:14px;border-radius:12px;background:#fffafa;border:1px solid #efe7ff}
+.player-answer-tag .meta{color:var(--muted);font-weight:800;font-size:14px}
+.player-answer-tag .score{font-weight:900;color:var(--primary);font-size:16px}
+
+/* controls and buttons */
+.controls-row{display:flex;gap:12px;margin-top:16px}
+.btn{padding:12px 16px;border-radius:12px;border:none;background:var(--primary);color:#fff;font-weight:900;cursor:pointer;transition:all var(--transition);font-size:15px}
+.btn.btn-secondary{background:transparent;color:var(--primary);border:1px solid rgba(96,46,171,0.12)}
+.btn.btn-danger{background:var(--danger);box-shadow:0 12px 30px rgba(255,93,108,0.12)}
+.btn.btn-primary{background:var(--primary)}
+
+/* final */
+.final-card .player-answer-tag{background:#f7f3ff}
+
+/* small */
+.players-header{font-weight:900;color:#4b3f6b;margin-top:12px;margin-bottom:8px}
+.info-row{display:flex;justify-content:space-between;color:var(--muted);margin-top:14px;font-weight:900;font-size:16px}
+
+/* make layout breathe more */
+.card, .content-inner.full-bleed { padding-bottom:32px; }
