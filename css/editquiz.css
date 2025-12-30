@@ -1,0 +1,235 @@
+/* =========================================
+   ОСНОВНОЙ ФОН И ЛОАДЕР (Идентично конструктору)
+   ========================================= */
+.quiz-creator-body {
+    background-color: #ffffff;
+}
+
+.loading-overlay {
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.9); 
+    backdrop-filter: blur(5px);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    z-index: 10000; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: 0.3s;
+}
+
+.loading-overlay.active { 
+    opacity: 1; 
+    pointer-events: all; 
+}
+
+.spinner {
+    width: 50px; height: 50px;
+    border: 5px solid #f3f3f3; 
+    border-top: 5px solid #8a2be2;
+    border-radius: 50%; 
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 
+    0% { transform: rotate(0deg); } 
+    100% { transform: rotate(360deg); } 
+}
+
+/* =========================================
+   БЛОК ВОПРОСА (Стили из конструктора)
+   ========================================= */
+.question-block {
+    background: #ffffff;
+    border: 1px solid #eee;
+    border-radius: 6vw;
+    padding: 6vw;
+    margin-bottom: 5vw;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    /* Плавный переход для схлопывания высоты и других свойств */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- ОБНОВЛЕННЫЕ АНИМАЦИИ --- */
+.question-block.fade-in { 
+    animation: slideIn 0.5s ease-out forwards; 
+}
+
+@keyframes slideIn { 
+    from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95); 
+    } 
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    } 
+}
+
+.removing { 
+    opacity: 0 !important; 
+    transform: scale(0.9) !important; 
+    height: 0 !important; 
+    margin-bottom: 0 !important; 
+    padding-top: 0 !important; 
+    padding-bottom: 0 !important; 
+    border-width: 0 !important; 
+    pointer-events: none;
+    /* Плавность схлопывания берется из transition родителя .question-block */
+}
+/* ---------------------------- */
+
+.question-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 5vw; 
+}
+
+.nqName { 
+    font-size: 5vw; 
+    color: #602EAB; 
+    margin: 0; 
+    font-weight: 700;
+}
+
+/* Поля ввода внутри вопроса */
+.baseInputs { 
+    background-color: #f8f6ff; 
+    border-radius: 3vw; 
+    font-size: 4.2vw; 
+    padding: 4vw; 
+    width: 100%; 
+    box-sizing: border-box; 
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.baseInputs:focus {
+    background-color: #fff;
+    border-color: #602EAB;
+    outline: none;
+}
+
+.qstN { margin-bottom: 5vw; }
+
+.newAnswerLine { 
+    display: flex; 
+    align-items: center; 
+    gap: 3vw; 
+    margin-bottom: 3vw; 
+}
+
+/* Кнопка удаления (Красный крестик) */
+.delete-btn { 
+    background: #fff1f1; 
+    border-radius: 2.5vw;
+    width: 11vw; 
+    height: 11vw; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    flex-shrink: 0;
+    border: none;
+}
+
+.delete-btn svg { width: 60%; height: 60%; }
+.delete-btn svg path { stroke: #FF4B4B; stroke-width: 2.5; }
+
+.nqRadio { 
+    width: 7vw; 
+    height: 7vw; 
+    accent-color: #602EAB; 
+    flex-shrink: 0;
+}
+
+/* Маленькая кнопка "Добавить вариант" внутри вопроса */
+.add-ans {
+    width: 100%;
+    height: 11vw;
+    background: #E0D3FE;
+    border-radius: 3vw;
+    color: #602EAB;
+    font-size: 4vw;
+    font-weight: bold;
+    margin-top: 2vw;
+    border: none;
+}
+
+/* =========================================
+   КНОПКИ ВНИЗУ (Идентично вашей разметке)
+   ========================================= */
+
+/* Кнопка "Добавить вопрос" (Светлая с пунктиром) */
+#addQuestionBtn.add-question-main-btn { 
+    background: #f8f6ff !important; 
+    color: #602EAB !important; 
+    height: 14vw !important; 
+    font-size: 4.5vw !important; 
+    border-radius: 4.5vw !important;
+    border: 0.5vw dashed #602EAB !important;
+    box-shadow: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    opacity: 0.9;
+    margin-bottom: 4vw;
+}
+
+/* Кнопка "Сохранить изменения" (Фиолетовая заливка) */
+#saveChangesBtn.add-question-main-btn { 
+    background: #602EAB !important; 
+    color: #fff !important; 
+    height: 16vw !important; 
+    font-size: 5vw !important; 
+    font-weight: 700 !important;
+    border-radius: 4.5vw !important;
+    box-shadow: 0 8px 20px rgba(96, 46, 171, 0.3) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: none !important;
+}
+
+/* =========================================
+   ВАЛИДАЦИЯ (Ошибки)
+   ========================================= */
+.input-error { 
+    border: 0.1vw solid #ff4d4d !important; 
+    background-color: #fff5f5 !important;
+}
+
+/* Для главного названия (если там только нижняя граница) */
+#quizNameInput.input-error {
+    border: none !important;
+    border-bottom: 0.1vw solid #ff4d4d !important;
+    background-color: transparent !important;
+}
+
+.input-error::placeholder {
+    color: #ff4d4d !important;
+}
+
+.radio-error { 
+    outline: 0vw solid #ff4d4d !important; 
+    outline-offset: 0.5vw; 
+    border-radius: 50%; 
+}
+
+.error-hint { 
+    color: #ff4d4d; 
+    font-size: 3.5vw; 
+    margin-top: 2vw; 
+    margin-bottom: 2vw;
+    display: block; 
+    font-family: sans-serif; 
+    font-weight: 500;
+}
+
+/* Остальные стили блоков остаются без изменений из вашего последнего сообщения... */
