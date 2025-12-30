@@ -1,0 +1,232 @@
+:root{
+  --bg:#F5F7FF;
+  --white:#fff;
+  --accent:#4A57E1;
+  --accent2:#6A7BFF;
+  --success:#22C87A;
+  --danger:#FF5C5C;
+  --text:#1B1C33;
+  --muted:#7C7F9A;
+  
+  --radius:18px;
+  --shadow:0 8px 30px rgba(0,0,0,.08);
+  --transition:.28s ease;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:"Inter",Arial,sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* убрали баннер, чтобы ничего не ломало */
+.top-banner{display:none!important;}
+
+/** ============ ROOT LAYOUT ============ **/
+.layout-root{
+  width:100%;
+  max-width:860px;
+  padding:24px;
+}
+
+/** ============ CARD ============ **/
+.card{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
+  transition:transform var(--transition),box-shadow var(--transition);
+  overflow:hidden;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 40px rgba(0,0,0,.10);
+}
+
+.cards-stack{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+/** ============ TITLES & COUNTERS ============ **/
+.quiz-title{
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:8px;
+  color:var(--accent);
+}
+.quiz-title.small{font-size:20px;}
+
+.counter{
+  background:#EEF1FF;
+  padding:6px 12px;
+  border-radius:12px;
+  font-weight:700;
+  font-size:14px;
+  color:var(--accent);
+}
+
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:10px;
+}
+
+.score-mini{
+  text-align:right;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:600;
+}
+
+/** ============ QUESTION BLOCK ============ **/
+.question-bleed{
+  margin-top:14px;
+  border-radius:var(--radius);
+  padding:26px;
+  background:linear-gradient(180deg,#F2F4FF,#fff);
+}
+
+.question-text{
+  font-size:26px;
+  font-weight:800;
+  margin-bottom:18px;
+}
+
+/** ============ TIMERS ============ **/
+.timers{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.progress-outer{
+  height:22px;
+  width:100%;
+  background:#E6E8FF;
+  border-radius:14px;
+  position:relative;
+  overflow:hidden;
+}
+
+.progress{
+  height:100%;
+  background:linear-gradient(90deg,var(--accent2),var(--accent));
+  width:100%;
+  transform-origin:left;
+  transition:width .15s linear;
+}
+
+.progress.waiting{background:#C8CCF7;}
+
+.timer-badge{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-weight:800;
+  color:#fff;
+  font-size:13px;
+}
+
+/** ============ LAYOUT FOR ANSWERS & PLAYERS ============ **/
+.answers-and-players{
+  margin-top:16px;
+  display:flex;
+  gap:18px;
+}
+
+.players-column,
+.ranking-column{flex:1;}
+
+.section-title{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+
+.players-list{display:flex;flex-direction:column;gap:10px;}
+
+/** ============ PLAYER ANSWER BUTTONS ============ **/
+.answers-grid{
+  display:grid;
+  gap:14px;
+}
+
+.answer-btn{
+  background:#fff;
+  border:2px solid #E7E9FF;
+  border-radius:14px;
+  padding:18px;
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+  transition:var(--transition);
+  position:relative;
+}
+.answer-btn:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 26px rgba(0,0,0,.07);
+}
+
+/* selection states */
+.answer-btn.selected{border-color:var(--accent);background:#F2F4FF;}
+.answer-btn.correct{background:var(--success)!important;color:#fff;}
+.answer-btn.incorrect{background:var(--danger)!important;color:#fff;}
+
+/** ============ SCORE RESULT PILL ============ **/
+.score-pill{
+  margin-top:18px;
+  background:#EEF1FF;
+  border-radius:14px;
+  font-size:18px;
+  font-weight:900;
+  color:var(--accent);
+  padding:14px;
+}
+
+.score-val{font-size:22px;}
+
+/** ============ BUTTONS ============ **/
+.btn{
+  padding:10px 16px;
+  font-size:14px;
+  font-weight:800;
+  border-radius:12px;
+  cursor:pointer;
+  border:none;
+  transition:var(--transition);
+}
+.btn:active{transform:scale(.96);}
+
+.btn.primary{background:linear-gradient(90deg,var(--accent2),var(--accent));color:white;}
+.btn.secondary{background:#fff;border:2px solid var(--accent);color:var(--accent);}
+.btn.danger{background:var(--danger);color:white;}
+
+/** ============ FINAL SCREEN ============ **/
+.final-list .player-answer-tag{
+  background:#F5F6FF;
+}
+
+.player-answer-tag{
+  background:#fff;
+  border-radius:12px;
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  border:1px solid #E8E9FD;
+}
+
+/** 📱 Adaptive **/
+@media(max-width:720px){
+  .answers-and-players{flex-direction:column;}
+  .question-text{font-size:20px;}
+}
