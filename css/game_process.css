@@ -1,0 +1,183 @@
+/* =========================================
+   БАЗОВЫЕ СТИЛИ
+   ========================================= */
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: #ffffff !important;  /* FIX — убрана темная тема */
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+button:active { transform: scale(.96); }
+
+/* -------------------------------
+   Шапка
+-------------------------------- */
+.header-container{
+    margin: 6vw 0 10vw 0; /* FIX — больше воздуха */
+    padding-right: 4vw;
+}
+
+.header-badge{
+    display:flex;
+    align-items:center;
+    width:85%;
+    background:linear-gradient(135deg, #602EAB, #8355d6);
+    padding:5vw 6vw;
+    color:white;
+    border-radius:0 12vw 12vw 0;
+    box-shadow:0 8px 20px rgba(96,46,171,.25);
+}
+
+.icon-circle{
+    width:11vw; height:11vw;
+    border-radius:50%;
+    background:rgba(255,255,255,.22);
+    display:flex; justify-content:center; align-items:center;
+    margin-right:4vw;
+}
+
+.header-text h1{ font-size:5.5vw; margin:0; font-weight:700;}
+.header-text p{ font-size:3vw; opacity:.85; margin:0; }
+
+.content{
+    padding: 0 6vw 20vw 6vw; 
+    max-width: 900px;
+    margin: auto;
+}
+
+/* =========================================
+   Название викторины
+   ========================================= */
+.input-group{ position: relative; margin-bottom: 10vw;}
+.main-title-input{
+    width:100%; height:12vw;
+    border:0; border-bottom:3px solid #e0d3fe;
+    font-size:6vw; font-weight:600;
+    background:transparent;
+    color:#2d1354;
+    transition:.3s;
+}
+.main-title-input:focus{ border-bottom-color:#602EAB; }
+
+/* =========================================
+   Блок вопроса
+   ========================================= */
+.question-block{
+    background:#fff;
+    border-radius:5vw;
+    padding:6vw;
+    margin-bottom:6vw;  /* FIX — увеличен отступ */
+    border:1px solid #eee;
+    box-shadow:0 4px 15px rgba(0,0,0,.04);
+}
+
+.question-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:5vw;
+}
+
+.nqName{
+    font-size:5vw;
+    font-weight:700;
+    color:#602EAB;
+}
+
+.baseInputs{
+    width:100%;
+    background:#f8f6ff;
+    border-radius:3vw;
+    padding:4vw;
+    font-size:4.2vw;
+    border:1px solid transparent;
+    margin-bottom:4vw;
+}
+
+.baseInputs:focus{
+    background:#fff;
+    border-color:#602EAB;
+}
+
+.ans-list{ margin-bottom:4vw; }
+
+.newAnswerLine{
+    display:flex;
+    gap:3vw;
+    align-items:center;
+    margin-bottom:3vw;
+}
+
+.nqRadio{
+    width:7vw; height:7vw;
+    accent-color:#602EAB;
+}
+
+.delete-btn{
+    width:10vw; height:10vw;
+    border-radius:3vw;
+    background:#ffe9e9;
+    display:flex; justify-content:center; align-items:center;
+}
+
+.add-ans{
+    width:100%;
+    height:11vw;
+    border-radius:3vw;
+    background:#e6d9ff;
+    font-size:4vw;
+    color:#602EAB;
+    font-weight:bold;
+}
+
+/* =========================================
+   Кнопки
+   ========================================= */
+
+/* Добавить вопрос */
+.add-question-main-btn{
+    width:100%;
+    height:15vw;
+    border-radius:4.5vw;
+    font-size:4.5vw;
+    background:#f7f3ff;
+    color:#602EAB;
+    border:.5vw dashed #602EAB;
+    margin-top:5vw; /* FIX — добавлен отступ чтобы не слипалось */
+}
+
+/* Сохранить */
+.add-question-main-btn + br + .add-question-main-btn,
+.save-quiz-btn-final{
+    width:100%;
+    height:16vw;
+    font-size:5vw;
+    background:#602EAB;
+    color:#fff;
+    font-weight:700;
+    border-radius:4.5vw;
+    box-shadow:0 8px 20px rgba(96,46,171,.3);
+    margin-top:4vw;
+}
+
+
+
+/* =========================================
+   Снежки — без изменений
+   ========================================= */
+.snowflakes{
+    position:fixed; top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    z-index:999;
+}
