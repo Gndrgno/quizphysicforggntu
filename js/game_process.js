@@ -1,11 +1,8 @@
 // js/game_process.js
-// Полная версия с учётом всех предыдущих требований.
-// Синхронные таймеры через serverTimestamp, host вычисляет очки до reveal,
-// revealAnswersUI анимированно красит все варианты слева направо,
-// при последнем вопросе текст waiting меняется на "До вывода результатов".
-// Требование: js/configure.js должен быть подключён ранее и экспортировать window.fb и window.db,
-// а также выставлять window.__FIREBASE_READY__ и диспатчить событие 'firebase-ready' (необязательно, polling работает тоже).
+// Обновлённый файл — включает вызов revealAnswersUI при переходе в фазу 'revealing',
+// а также анимационное заливание вариантов слева-направо. Сохраняется прежняя логика и API.
 
+// Константы
 const ANSWER_DURATION = 10;    // seconds
 const REVEAL_DURATION = 1.5;   // seconds (animation)
 const WAITING_DURATION = 5;    // seconds between questions
@@ -33,13 +30,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const fb = window.fb;
   const db = window.db;
 
-  // get wrapped functions from fb (configure.js must expose these)
+  // извлекаем методы из window.fb (configure.js должен их выставить)
   const { collection, doc, getDoc, setDoc, updateDoc, onSnapshot, getDocs, query, where, serverTimestamp } = fb;
   const increment = fb.increment || (window.firebase && window.firebase.firestore && window.firebase.firestore.FieldValue && window.firebase.firestore.FieldValue.increment);
 
   // DOM nodes
   const nodes = {
-    // admin
     adminCard: document.getElementById('adminGameControls'),
     quizTitleAdmin: document.getElementById('quizTitleAdmin'),
     questionTextAdmin: document.getElementById('questionTextAdmin'),
@@ -55,7 +51,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     forceRevealBtn: document.getElementById('forceRevealBtn'),
     endGameBtn: document.getElementById('endGameBtn'),
 
-    // player
     playerCard: document.getElementById('playerGameControls'),
     quizTitlePlayer: document.getElementById('quizTitlePlayer'),
     questionTextPlayer: document.getElementById('questionTextPlayer'),
@@ -71,13 +66,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     yourTotalScore: document.getElementById('yourTotalScore'),
     yourTotalTime: document.getElementById('yourTotalTime'),
 
-    // final
     finalResults: document.getElementById('finalResults'),
     finalScoresList: document.getElementById('finalScoresList'),
     backToHomeBtn: document.getElementById('backToHomeBtn')
   };
 
-  // session & user info
+  // session / user info
   const currentLobbyCode = sessionStorage.getItem('currentLobbyCode');
   const myPlayerId = localStorage.getItem('myPlayerId');
   const isHost = !!sessionStorage.getItem('activeQuizId');
@@ -87,17 +81,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // local reactive session state (updated from onSnapshot)
+  // state
   let sessionState = null;
   let quizData = null;
   let rafId = null;
+  let prevPhase = null;
 
-  // subscriptions
+  // subs
   let sessionUnsub = null;
   let answersUnsub = null;
   let playersUnsub = null;
 
-  // toast
   function toast(text) {
     const el = document.createElement('div');
     el.textContent = text;
@@ -107,7 +101,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(()=> { el.style.opacity = '0'; setTimeout(()=> el.remove(), 300); }, 2000);
   }
 
-  // UI helpers
   function showAdmin() { nodes.adminCard.style.display = 'block'; nodes.playerCard.style.display = 'none'; }
   function showPlayer(){ nodes.playerCard.style.display = 'block'; nodes.adminCard.style.display = 'none'; }
 
@@ -117,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     nodes.quizTitlePlayer.textContent = quizData.title || 'Викторина';
   }
 
-  // render answers for player
+  // render answers for player (used also to prepare DOM so reveal can color variants)
   function renderAnswersForPlayer(question) {
     nodes.answersList.innerHTML = '';
     if (!question) return;
@@ -127,7 +120,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       btn.type = 'button';
       btn.innerHTML = `<div>${text}</div><div class="status"></div>`;
       btn.onclick = async () => {
-        // disable quick
         nodes.answersList.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
         btn.classList.add('selected');
         try {
@@ -147,9 +139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             timeTaken,
             submittedAt: serverTimestamp()
           });
-        } catch (e) {
-          console.error('submit answer', e);
-        }
+        } catch (e) { console.error('submit answer', e); }
       };
       nodes.answersList.appendChild(btn);
     });
@@ -163,7 +153,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch { return null; }
   }
 
-  // Admin render answers
   function renderAdminAnswersList(docs) {
     nodes.playersAnswersList.innerHTML = '';
     docs.forEach(d => {
@@ -185,7 +174,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // render ranking
   function renderRanking(docs) {
     const arr = [];
     docs.forEach(d => {
@@ -214,7 +202,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // revealAnswersUI: анимированно раскрашивает все варианты слева направо; затем показывает очки игрока
+  // Reveal: animate left->right, color all answers
   async function revealAnswersUI() {
     const qIdx = sessionState.currentQuestion;
     const q = quizData && quizData.questions ? quizData.questions[qIdx] : null;
@@ -222,15 +210,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const buttons = Array.from(nodes.answersList.querySelectorAll('.answer-btn'));
 
-    // сбросить стейт
+    // reset and lock
     buttons.forEach(b => {
       b.classList.remove('selected', 'correct', 'incorrect');
       b.disabled = true;
       const s = b.querySelector('.status'); if (s) s.textContent = '';
     });
 
-    // left-to-right animation
-    const delay = 120; // ms between items
+    // animate left to right using staggered timeouts
+    const delay = 120;
     buttons.forEach((b, i) => {
       setTimeout(() => {
         if (i === q.correctAnswerIndex) {
@@ -243,7 +231,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       }, i * delay);
     });
 
-    // показать очки игроку после полной анимации
+    // show player's points after animation completes
     const totalMs = buttons.length * delay + 200;
     setTimeout(async () => {
       if (myPlayerId) {
@@ -257,31 +245,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, totalMs);
   }
 
-  // final UI
-  function showFinalUI(playersDocs) {
-    nodes.adminCard.style.display = 'none';
-    nodes.playerCard.style.display = 'none';
-    nodes.finalResults.style.display = 'block';
-    const arr = [];
-    playersDocs.forEach(d => {
-      const p = d.data();
-      arr.push({ name: p.name || 'Игрок', score: p.score || 0, totalTime: p.totalTime || 0 });
-    });
-    arr.sort((a,b) => (b.score - a.score) || (a.totalTime - b.totalTime));
-    nodes.finalScoresList.innerHTML = '';
-    arr.forEach((p, idx) => {
-      const item = document.createElement('div');
-      item.className = 'player-answer-tag';
-      item.innerHTML = `<div style="display:flex;flex-direction:column">
-                          <span style="font-weight:900">${idx+1}. ${p.name}</span>
-                          <span class="meta">Время: ${p.totalTime}s</span>
-                        </div>
-                        <div class="score">${p.score} баллов</div>`;
-      nodes.finalScoresList.appendChild(item);
-    });
-  }
-
-  // computeAndPersistScores (host)
   async function computeAndPersistScores(qIdx) {
     try {
       const answersCol = collection(db, 'active_sessions', currentLobbyCode, 'answers');
@@ -332,7 +295,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // host loop orchestrator
+  // host orchestrator
   let hostLoopRunning = false;
   async function hostLoopIfNeeded(s) {
     if (!isHost) return;
@@ -350,13 +313,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         // wait ANSWER_DURATION
         await new Promise(r => setTimeout(r, ANSWER_DURATION * 1000));
 
-        // compute & persist scores BEFORE reveal
+        // compute & persist scores before reveal
         await computeAndPersistScores(idx);
 
         // set reveal
         await updateDoc(doc(db, 'active_sessions', currentLobbyCode), { questionPhase: 'revealing', revealAt: serverTimestamp() });
 
-        // allow reveal animation
+        // wait for reveal animation
         await new Promise(r => setTimeout(r, REVEAL_DURATION * 1000));
 
         // waiting
@@ -376,7 +339,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // smooth RAF loop for timers and waiting text; includes logic to change text for last question
+  // RAF loop: animate timers and waiting text; handles "До вывода результатов" for last question
   function startAnimLoop() {
     if (rafId) cancelAnimationFrame(rafId);
     function frame() {
@@ -421,7 +384,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           if (isLast) {
             if (nextHintPlayer) nextHintPlayer.textContent = `До вывода результатов`;
             if (nextHintAdmin) nextHintAdmin.textContent = `До вывода результатов`;
-            // keep numeric badge visible as countdown if desired
             nodes.waitingTimerPlayer.textContent = Math.ceil(left);
             nodes.waitingTimerAdmin.textContent = Math.ceil(left);
           } else {
@@ -435,13 +397,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     rafId = requestAnimationFrame(frame);
   }
 
-  // subscriptions
+  // Subscriptions
   function subscribeAnswers() {
     if (answersUnsub) return;
     answersUnsub = onSnapshot(collection(db, 'active_sessions', currentLobbyCode, 'answers'), snapshot => {
       renderAdminAnswersList(snapshot.docs);
-      // if player and currently revealing, trigger reveal UI to read points & animate
-      if (!isHost && sessionState && sessionState.questionPhase === 'revealing') {
+      // If currently revealing, trigger reveal UI (for players and admin view of answers list)
+      if (sessionState && sessionState.questionPhase === 'revealing') {
+        // ensure answersList DOM exists (it does for players); reveal will color the DOM entries
         revealAnswersUI();
       }
     }, err => console.error('answers onSnapshot error', err));
@@ -464,6 +427,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTimeout(()=> window.location.href = 'homepage.html', 700);
         return;
       }
+      const prevState = sessionState;
       sessionState = snap.data();
 
       if (!quizData) {
@@ -487,6 +451,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
+      // question changed -> render answers (prepares DOM for reveal)
       if (typeof sessionState.currentQuestion === 'number') {
         const idx = sessionState.currentQuestion;
         const q = quizData && quizData.questions ? quizData.questions[idx] : null;
@@ -495,6 +460,15 @@ document.addEventListener('DOMContentLoaded', async () => {
           nodes.questionTextPlayer.textContent = `${idx+1}. ${q.question}`;
           renderAnswersForPlayer(q);
           nodes.playerScoreBlock.style.display = 'none';
+        }
+      }
+
+      // If phase changed to revealing, trigger revealAnswersUI so coloring happens for everyone
+      if (sessionState.questionPhase && sessionState.questionPhase !== prevPhase) {
+        prevPhase = sessionState.questionPhase;
+        if (prevPhase === 'revealing') {
+          // compute reveal UI on clients (players) — and admin's answersList DOM (if prepared) will also be colored
+          revealAnswersUI();
         }
       }
 
@@ -509,7 +483,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, err => console.error('session onSnapshot', err));
   }
 
-  // admin controls wiring
+  // admin controls
   function setupAdminControls() {
     if (!nodes.forceRevealBtn || !nodes.endGameBtn) return;
     nodes.forceRevealBtn.onclick = async () => {
@@ -527,7 +501,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (nodes.backToHomeBtn) nodes.backToHomeBtn.onclick = () => { localStorage.removeItem('myPlayerId'); sessionStorage.clear(); window.location.href = 'homepage.html'; };
 
-  // init: fetch initial session & quiz, then subscribe
+  // init
   try {
     const initSnap = await getDoc(doc(db, 'active_sessions', currentLobbyCode));
     if (!initSnap.exists()) {
