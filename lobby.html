@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Лобби викторины | Quiz Time</title>
+    <link rel="stylesheet" href="css/lobby.css">
+</head>
+<body>
+
+    <!--<div id="globalLoader" class="loading-overlay active"><div class="spinner"></div></div>-->
+    <div class="bg-decoration"></div>
+
+    <main class="lobby-container">
+        <section class="card main-card fade-in">
+            <div class="status-row">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="statusText">Ожидание игроков</span>
+                </div>
+            </div>
+            
+            <h1 class="quiz-title" id="quizTitle">Загрузка...</h1>
+            <p class="quiz-desc" id="quizDesc">Подготовьтесь, игра скоро начнется!</p>
+
+            <div id="adminControls" class="role-controls" style="display: none;">
+                <button type="button" class="btn btn-primary" id="startGame" disabled>
+                    Начать (0 готовы)
+                </button>
+                <button type="button" class="btn btn-link-danger" id="stopGame">Завершить сессию</button>
+            </div>
+
+            <div id="playerControls" class="role-controls" style="display: none;">
+                <button type="button" class="btn btn-ready" id="readyBtn">Я готов!</button>
+            </div>
+        </section>
+
+        <section class="card access-card fade-in" style="animation-delay: 0.1s;">
+            <div class="access-layout">
+                <div class="code-section">
+                    <span class="label">Код комнаты</span>
+                    <div class="code-display" id="displayCode">--------</div>
+                </div>
+                <div class="qr-section">
+                    <img id="qrImage" src="" alt="QR">
+                </div>
+            </div>
+            <div class="copy-box">
+    <input type="text" id="quizLink" readonly value="">
+    <button type="button" class="copy-btn" onclick="window.copyLink()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+    </button>
+</div>
+        </section>
+
+        <section class="card players-card fade-in" style="animation-delay: 0.2s;">
+            <div class="stats-row">
+                <div class="stat-pill">
+                    <div class="stat-icon q-icon">?</div>
+                    <div><b id="totalQuestions">0</b><span>Вопросов</span></div>
+                </div>
+                <div class="stat-pill">
+                    <div class="stat-icon p-icon">👤</div>
+                    <div><b id="playersCount">0</b><span>Игроков</span></div>
+                </div>
+            </div>
+
+            <div class="players-header">Участники в сети</div>
+            <div id="playersList" class="players-grid">
+                </div>
+        </section>
+    </main>
+    <script type="module" src="js/configure.js"></script>
+    <script src="js/lobby.js"></script>
+</body>
+</html>
